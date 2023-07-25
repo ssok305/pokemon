@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Pokemon = () => {
+  const navigate = useNavigate();
   const [pokemons, setPokemons] = useState([]);
   useEffect(() => {
     pokemonImg();
@@ -25,9 +26,11 @@ const Pokemon = () => {
         `https://pokeapi.co/api/v2/pokemon/${pokemon}`
       );
       const data = await response.json();
-      
 
-      let pokemonImg = { img: data.sprites.front_default, name: data.forms[0].name };
+      let pokemonImg = {
+        img: data.sprites.front_default,
+        name: data.forms[0].name,
+      };
 
       arr.push(pokemonImg);
     }
@@ -35,30 +38,38 @@ const Pokemon = () => {
     setPokemons([...pokemons, arr]);
   }
 
-  
-
+  function handlePokemonClick() {
+    navigate("./PokemonData");
+  }
+  function handleBack() {
+    navigate("/Trainers");
+  }
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
-        marginBottom: "100px",
-      }}
-    >
-      {pokemons.length > 0 &&
-        pokemons[0].map((pokemon, index) => {
-          return (
-            <div key={pokemon.img}>
-              <img
-                key={index}
-                src={pokemon.img}
-                alt="a picture of a pokemon"
-                width={150}
-              />
-              <span>{pokemon.name}</span>
-            </div>
-          );
-        })}
+    <div>
+      <button onClick={handleBack}>Go Back</button>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1fr 1fr 1fr",
+          marginBottom: "100px",
+        }}
+      >
+        {pokemons.length > 0 &&
+          pokemons[0].map((pokemon, index) => {
+            return (
+              <div onClick={handlePokemonClick} key={pokemon.img}>
+                <img
+                  key={index}
+                  src={pokemon.img}
+                  alt="a picture of a pokemon"
+                  width={150}
+                />
+
+                <span>{pokemon.name}</span>
+              </div>
+            );
+          })}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PokemonStats() {
-  const params = useParams()
+const navigate = useNavigate()
   const [pokemonData, setPokemonData] = useState([]);
+  const randomNum = Math.floor(Math.random() * 1000);
 
   async function getData() {
-    const url = "https://pokeapi.co/api/v2/pokemon/1";
+    const url = `https://pokeapi.co/api/v2/pokemon/${randomNum}`;
     const response = await fetch(url);
     const data = await response.json();
 
@@ -17,6 +19,9 @@ function PokemonStats() {
     getData();
   }, []);
 
+  function handleBack(){
+    navigate('/Trainers/Pokemon')
+  }
   return (
     pokemonData.sprites && (
       <div>
@@ -35,6 +40,7 @@ function PokemonStats() {
 
         <h1>Weight: {pokemonData.weight}</h1>
         <h1>Height: {pokemonData.height}</h1>
+        <button onClick={handleBack}>Go back!</button>
       </div>
     )
   );

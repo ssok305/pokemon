@@ -15,19 +15,25 @@ export default function Trainers() {
   function handleClick() {
     navigate("./Pokemon");
   }
+  function handleBack() {
+    navigate("/");
+  }
   const trainers = useSelector((state) => state.trainer);
   console.log(trainers);
   return (
     <div>
-      {trainers.map((trainer) => (
-        <div key={trainer.id} onClick={handleClick}>
-          <img width={130} height={190} src={randomPic()} />
-          <h3>{trainer.name}</h3>
-          <p>Age: {trainer.age}</p>
-          <p>Region: {trainer.region}</p>
-          <p>Hometown: {trainer.hometown}</p>
-        </div>
-      ))}
+      <button onClick={handleBack}>Go Back to Homepage</button>
+      <div>
+        {trainers.map((trainer) => (
+          <div key={trainer.id} onClick={handleClick}>
+            <img width={130} height={190} src={randomPic()} />
+            <h3>{trainer.name}</h3>
+            <p>Age: {trainer.age}</p>
+            <p>Region: {trainer.region}</p>
+            <p>Hometown: {trainer.hometown}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
